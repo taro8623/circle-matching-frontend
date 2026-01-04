@@ -4,10 +4,21 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("ログイン:", { email, password });
-    // 後で FastAPI と接続する
+
+    const res = await fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (res.ok) {
+      alert("ログイン成功");
+      // トークン保存や画面遷移は後で追加
+    } else {
+      alert("ログイン失敗");
+    }
   }
 
   return (

@@ -1,14 +1,25 @@
 import { useState } from "react";
 
-export default function Singnup() {
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("登録:", { email, password, userName });
-    // 後で FastAPI と接続する
+
+    const res = await fetch("http://localhost:8000/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, userName }),
+    });
+
+    if (res.ok) {
+      alert("登録成功");
+      window.location.href = "/login";
+    } else {
+      alert("登録失敗");
+    }
   }
 
   return (
