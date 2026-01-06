@@ -11,7 +11,11 @@ export default function Signup() {
     const res = await fetch("http://localhost:8000/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, userName }),
+      body: JSON.stringify({
+        name: userName, // ← ここを修正
+        email,
+        password,
+      }),
     });
 
     if (res.ok) {
